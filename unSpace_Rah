@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source mubarak_funcs
+removeSpaces "$1" "$2"

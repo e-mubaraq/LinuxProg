@@ -1,0 +1,26 @@
+#!/bin/bash
+
+source mubarak_funcs
+#set -x
+old_file="$1"
+
+IFS=$'\n'
+if [ -z "$old_file" ]
+then
+    #work on the current directory
+    old_file=.
+fi
+
+    lsf=`find "$old_file" -depth -name '* *' -type f`
+
+    for file in "$lsf"
+    do
+        removeSpaces "$file" "$2"
+    done
+
+    lsd=`find "$old_file" -depth -name '* *' -type d`
+    for file in "$lsd"
+    do
+        removeSpaces "$file" "$2"
+    done
+

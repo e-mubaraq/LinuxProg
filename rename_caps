@@ -1,0 +1,6 @@
+#!/bin/bash
+. mubarak_funcs
+for f in "${@}"
+do
+    uncap "$f"
+done

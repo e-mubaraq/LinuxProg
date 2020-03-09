@@ -1,0 +1,21 @@
+# set var to all the directories that have a space in them
+
+var=`find . -type d -name '* *'`
+
+#set the special variable so that the field separator to a new line instead of a space
+
+IFS=$'\n'
+
+# First do all the directories, then do all the file
+
+
+
+# loop through each directory, separated by a newlines (not spaces!)
+#
+
+for f in $var
+do
+    echo $f # instead of echo, remove the spaces!!
+done
+
+# now you write the code to do the same thing, but with the files (not directories)

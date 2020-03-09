@@ -1,0 +1,41 @@
+
+#!/bin/bash
+awk -v SEARCH="$1" '
+BEGIN {
+    print "Search for <" SEARCH">"
+}
+function addLine(line)
+{
+    line = NR " " line
+    if (line1 == "")
+        line1 = line
+    else if (line2 == "" )
+        line2 = line
+    else if (line3 == "" )
+        line3 = line
+    else
+    {
+        line1 = line2
+        line2 = line3
+        line3 = line
+    }
+}
+function printWindow()
+{
+    print "--- " line1
+    print "---> " line1
+    print "--- " line3
+    print "" 
+}
+{
+    print "search line " NR": " $0
+    addLine($0)
+    printWindow()
+    if ($0 ~ SEARCH)
+        print "*** Line " NR": " $0 " *** has " SEARCH
+    else
+        print "--- Line " NR": " $0 " *** does NOT have " SEARCH
+}
+END {
+    print "At End"
+}'

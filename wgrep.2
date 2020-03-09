@@ -1,0 +1,15 @@
+#!/bin/bash
+awk -v SEARCH="$1" '
+BEGIN {
+    print "Search for <" SEARCH">"
+}
+{
+    print "search line " NR": " $0
+    if ($0 ~ SEARCH)
+        print "*** Line " NR": " $0 " *** has " SEARCH
+    else
+        print "--- Line " NR": " $0 " *** does NOT have " SEARCH
+}
+END {
+    print "At End"
+}'

@@ -1,0 +1,26 @@
+#!/bin/bash
+  
+source mubarak_funcs
+
+startDir=`pwd`
+old_file="$1"
+if [ -z "$old_file" ]
+then
+    #work on the current directory
+    old_file=.
+fi
+
+if [ ! -d "$old_file" ]
+then
+    new_file=`removeSpaces "$old_file" "$2"`
+else
+    new_file=`removeSpaces "$old_file" "$2"`
+    cd "$new_file"
+    for file in *
+    do
+        despace_files "$file" "$2"
+    done
+fi
+
+# should cd to startDir rather than ..
+cd $startDir

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+source mubarak_funcs
+cdmkdir "$1"

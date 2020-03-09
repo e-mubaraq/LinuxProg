@@ -1,0 +1,8 @@
+#!/bin/bash
+
+user=`logname`
+echo $user
+#input=`read -p "How many courses are you taking: "`
+echo -n  "How many courses are you taking: "
+read input
+echo $input

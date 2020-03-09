@@ -1,0 +1,57 @@
+#!/bin/bash
+
+awk -v SEARCH="$1" '
+BEGIN {
+    print "Search for <" SEARCH">"
+}
+function addLine(line)
+{
+    line = NR " " line
+    if (line1 == "" )
+        line1 = line
+    else if (line2 == "" )
+        line2 = line
+    else if (line3 == "" )
+        line3 = line
+    else
+    {
+        line1 = line2
+        line2 = line3
+        line3 = line
+    }
+}
+function printWindow()
+{
+    if (line1 != "")
+        print "--- " line1
+    if (line2 != "")
+        print "---> " line2
+    if (line3 != "")
+        print "--- " line3
+    print "" 
+}
+function printIfMatch()
+{
+    if ($0 ~ SEARCH)
+    {
+        print "Found: " SEARCH" on line " NR
+        print ""
+        printWindow()
+        return 1 
+    }
+}
+{
+    #print "search line " NR": " $0 " for " SEARCH
+    addLine($0)
+    printIfMatch()
+
+}
+END {
+    if ($line3 ~ SEARCH)
+    {
+        addLine("")
+        line3=""
+        printWindow()
+    }
+    print "At End"
+}'

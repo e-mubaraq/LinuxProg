@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source mubarak_funcs
+startDir=`pwd`
+for zippedFile in $*
+do
+    fullPath="$startDir/$zippedFile"
+
+    cdmkdir "$zippedFile"
+    andID=`isDirExist "$zippedFile"`
+    unzip $fullPath -d $andID
+
+
+    if [ $? -eq 0 ]
+    then
+        mkdir -p zips
+        mv $fullPath zips
+
+    else
+        echo "Your file $zippedFile was not unzipped correctly"
+    fi
+    cd $startDir
+
+done

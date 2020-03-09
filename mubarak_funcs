@@ -1,0 +1,78 @@
+
+removeSpaces_old()
+{
+    file="$1"
+    chara="$2"
+
+    if [ -n "$chara" ]
+    then
+        new_file=`echo $file | tr " " "$chara"`
+    else
+        new_file=`echo $file | tr -d " "`
+    fi
+    echo "$new_file"
+    mv "$file" $new_file
+
+}
+
+removeSpaces()
+{
+    file="$1"
+    chara="$2"
+
+        if [ -n "$chara" ]
+        then
+             new_file=`echo $file | tr " " "$chara"`
+        else
+             new_file=`echo $file | tr -d " "`
+        fi
+
+    if [ "$file" != "$new_file" ]
+    then
+        mv "$file" $new_file
+    fi
+    echo "$new_file"
+}
+
+uncap()
+{
+    old_file="$1"
+    new_file=`echo $old_file | tr "[A-Z]" "[a-z]"`
+    mv "$old_file" "$new_file"
+
+    return 1
+}
+
+getAndrewID()
+{
+    echo "$1" | sed -e 's/_.*//'
+}
+
+getN()
+{
+    echo "$1" | sed -e 's/.zip//' | sed -e 's/.*_files//'
+}
+
+cdmkdir()
+{
+    N=`getN "$1"`
+    h=`pwd`
+    new_dir="hw""$N"
+    if [ `basename $h` != "$new_dir" ]
+    then
+        mkdir -p "$new_dir"
+    fi
+    cd "$new_dir"
+    echo $PWD
+    return 1
+}
+
+isDirExist()
+{
+    fileDir=`getAndrewID "$1"`
+    if [ ! -d "$fileDir" ]
+    then
+        mkdir -p "$fileDir"
+    fi
+    echo "$fileDir"
+}
