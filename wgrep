@@ -8,34 +8,52 @@ BEGIN {
 function addLine(line)
 {
     line = NR " " line
-    if (line1 == "" )
-        line1 = line
-    else if (line2 == "" )
-        line2 = line
-    else if (line3 == "" )
-        line3 = line
+    if (prevLine == "" )
+        prevLine = line
+    else if (lineToCheck == "" )
+    {
+        lineToCheck = line
+        LINE_TO_CHECK_NR = NR
+    }    
+    else if (nextLine == "" )
+        nextLine = line
     else
     {
-        line1 = line2
-        line2 = line3
-        line3 = line
+        prevLine = lineToCheck
+        lineToCheck = nextLine
+        nextLine = line
+        LINE_TO_CHECK_NR = NR-1
     }
 }
 function printWindow()
 {
-    if (line1 != "")
-        print "--- " line1
-    if (line2 != "")
-        print "---> " line2
-    if (line3 != "")
-        print "--- " line3
+    if (prevLine != "")
+        print "---  " prevLine
+    if (lineToCheck != "")
+        print "---> " lineToCheck
+    if (nextLine != "")
+        print "---  " nextLine
     print "" 
 }
 function printIfMatch()
 {
-    if ($0 ~ SEARCH)
+    #Handles special case on the first line
+    if (nextLine == "" && prevLine ~ SEARCH && lineToCheck != "")
     {
-        print "Found: " SEARCH" on line " NR
+        print "Found: " SEARCH" on line 1" 
+        print ""
+        print "---> " prevLine
+        print "---  " lineToCheck
+        print ""
+        COUNT++
+        return 1
+    }
+    if (nextLine == "")
+        return 1
+
+    if (lineToCheck ~ SEARCH)
+    {
+        print "Found: " SEARCH" on line " LINE_TO_CHECK_NR
         print ""
         printWindow()
         COUNT++
@@ -48,11 +66,13 @@ function printIfMatch()
 
 }
 END {
-    if ($line3 ~ SEARCH)
+    if ($0 ~ SEARCH)
     {
+        print "Found: " SEARCH" on line " NR
         addLine("")
-        line3=""
+        nextLine=""
         printWindow()
+        COUNT++
     }
     print "----------------"
     print "Summary: "

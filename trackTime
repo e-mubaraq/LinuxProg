@@ -1,8 +1,12 @@
 #!/bin/bash
 
 user=`logname`
-echo $user
+echo USER: $user
 #input=`read -p "How many courses are you taking: "`
-echo -n  "How many courses are you taking: "
-read input
-echo $input
+
+while read -p "Enter course:  "; 
+do 
+    echo -n  "How many hours do you spend on this course: "
+    read count
+    echo "$REPLY" : $count hours
+done

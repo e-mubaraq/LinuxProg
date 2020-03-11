@@ -1,0 +1,9 @@
+echo there are $# arguments
+while getopts "ab:c" option
+do
+    echo Got option $option in $OPTIND
+    echo arg1: $1
+done
+echo $# Args are: $@
+shift $((OPTIND-1))
+echo $# Args are: $@

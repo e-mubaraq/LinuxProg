@@ -1,2 +1,11 @@
 #!/bin/bash
 
+if [ -f file_name ]
+then
+
+    findflag="-newer file_name"
+fi
+
+command="find . $findflag"
+$command
+echo ran command: $command
