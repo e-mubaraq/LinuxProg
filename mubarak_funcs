@@ -76,3 +76,11 @@ isDirExist()
     fi
     echo "$fileDir"
 }
+
+renameBackup()
+{
+    file=$1
+    fileBak="$file".bak
+    cp -r "$file" "$fileBak"
+    echo "$fileBak"
+}

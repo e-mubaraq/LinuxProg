@@ -1,12 +1,23 @@
 #!/bin/bash
 
+st=$1
 user=`logname`
 echo USER: $user
-#input=`read -p "How many courses are you taking: "`
 
-while read -p "Enter course:  "; 
-do 
-    echo -n  "How many hours do you spend on this course: "
-    read count
-    echo "$REPLY" : $count hours
-done
+if [ "$st" != "start" ] && [ "$st" != "stop" ]
+then
+    echo "Please enter start or stop"
+
+else
+    if [ "$st" = "start" ]
+    then
+        echo "Start tracking time"
+        startTime=`date +%s`
+    else
+        echo "Stop tracking time"
+        stopTime=`date +%s`
+        timeSpent=$(( $stopTime - $startTime ))
+        echo $timeSpent
+    fi
+fi
+

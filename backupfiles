@@ -1,11 +1,21 @@
 #!/bin/bash
 
-if [ -f file_name ]
+source mubarak_funcs
+
+dir_to_backup="$1"
+here=`pwd`
+
+if [ -n "$dir_to_backup" ]
 then
-
-    findflag="-newer file_name"
+    findflag="-newer $dir_to_backup"
+else
+    findflag="-newer ."
 fi
-
 command="find . $findflag"
-$command
+#$command
 echo ran command: $command
+
+for file in `$command`
+do
+    renameBackup "$file"
+done
