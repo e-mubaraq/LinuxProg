@@ -84,3 +84,8 @@ renameBackup()
     cp -r "$file" "$fileBak"
     echo "$fileBak"
 }
+
+showUsage()
+{
+    echo "This script searches for the lines in all header files that have the string include"
+}

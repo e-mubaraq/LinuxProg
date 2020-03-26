@@ -1,7 +1,6 @@
 #!/bin/bash
 
 st=$1
-task=$2
 user=`logname`
 echo USER: $user
 

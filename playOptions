@@ -1,9 +1,16 @@
 echo there are $# arguments
-while getopts "ab:c" option
+
+while getopts "ab:ce""dg" option
 do
+    if [ "$option" == "e" ]
+    then
+        echo e is an option
+    else
     echo Got option $option in $OPTIND
     echo arg1: $1
+    fi
 done
 echo $# Args are: $@
 shift $((OPTIND-1))
 echo $# Args are: $@
+

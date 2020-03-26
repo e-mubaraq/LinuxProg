@@ -1,0 +1,13 @@
+#!/bin/bash
+
+source mubarak_funcs
+if [ -n "$1" ]
+then
+    while getopts "h" option
+    do
+        showUsage
+    done
+
+else
+    find . -name '*.h' -exec grep -Hn "include" {} \; 2>/dev/null
+fi
