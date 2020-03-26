@@ -1,2 +1,34 @@
 #!/bin/bash
 
+showHelp()
+{
+    echo "scrip usage: search_file [-in] [-pn] file"
+    echo "Use -i to ignore case. The -n to show the line numbers of the matched lines. The -pn flag is used to set the number of lines shown when using more."
+}
+
+echo $1 $2
+while getopts "inp:" option
+do
+    if [ "$option" == "i" ]
+    then
+        echo $option is an option
+        grep -i "$string" "$file"
+    elif [ "$option" == "n" ]
+    then
+        echo $option is an option
+        grep -n "$string" "$file"
+    elif [ "$option" == "p" ]
+    then
+        echo Got option $option in $OPTARG $OPTIND
+        pvalue="$OPTARG"
+        grep -m $pvalue "$string" "$file"
+        echo p-args: $1 $2 $3
+    else
+        showHelp
+        exit 1
+    fi
+done
+shift "$(($OPTIND -1))"
+echo $1 $2
+file=$1
+string=$2

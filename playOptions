@@ -6,8 +6,8 @@ do
     then
         echo e is an option
     else
-    echo Got option $option in $OPTIND
-    echo arg1: $1
+        echo Got option $option in $OPTIND
+        echo arg1: $1
     fi
 done
 echo $# Args are: $@
