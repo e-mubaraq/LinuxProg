@@ -1,0 +1,39 @@
+#	Makefile for program1
+
+#	Written by: Cathy Bishop, September 16, 2014.
+
+CC		=	gcc
+
+CFLAGS	=	-Werror -I ../include 
+LDFLAGS	=	
+
+# Headers
+
+HEADERS	=	../include/utils1.h ../include/utils2.h
+
+# Source files
+
+UTILSOURCE	=	utils1.c utils2.c 
+SOURCE		=	program1.c ${UTILSOURCE}
+
+# List all of the object files
+
+UTILOBJECTS	=	utils1.o utils2.o 
+OBJECTS		=	program1.o ${UTILOBJECTS}
+
+# Specify the source with main and the executable file name
+
+all: program1
+
+program1: ${OBJECTS} Makefile.bak ${HEADERS}
+	 ${CC} ${LDFLAGS} -o $@ ${OBJECTS} 
+
+clean:
+	rm -r ${OBJECTS} program1
+
+.SUFFIXES:
+.SUFFIXES: .c .o .h
+
+%.o : %.h 
+%.o : %.c ;  ${CC} ${CFLAGS} -c $< -o $@ 
+
