@@ -1,6 +1,12 @@
 #!/bin/bash
 
 #echo `git status`
+git status | grep Untracked
+if [ $? -ne 0 ]
+then
+    echo "No files to add."
+    exit 0
+fi
 read -p "Please enter filename or . to add all files: " file
 git add "$file"
 
