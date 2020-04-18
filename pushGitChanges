@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo `git status`
+#echo `git status`
+read -p "Please enter filename or . to add all files: " file
+git add "$file"
 
-message=`echo -n "Please enter your commit message"`
+read -p "Please enter your commit message: " message
 
 git commit -m "$message"
-git push
+#git push

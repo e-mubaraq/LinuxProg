@@ -15,9 +15,13 @@ else
         echo "Start tracking time"
         export startTime=`date +%s`
     else
+
         echo "Stop tracking time"
+        echo "Start time: $startTime"
+    
         stopTime=`date +%s`
-        if [ $startTime != 0 ]
+        echo "Stop time: $stopTime"
+        if [ "$startTime" -gt 0 ]
         then
             timeSpent=$(( $stopTime - $startTime ))
             echo $timeSpent
