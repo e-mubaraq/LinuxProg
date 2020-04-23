@@ -1,8 +1,11 @@
 #!/bin/bash
 
-#git status | grep Untracked
+git status | grep Untracked
+new_status=$?
 git status | grep modified
-if [ $? -ne 0 ]
+mod_status=$?
+
+if [ $new_status -ne 0 ] && [ $mod_status -ne 0 ] 
 then
     echo "No files to add."
     exit 0
