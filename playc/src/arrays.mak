@@ -4,7 +4,7 @@
 
 CC		=	gcc
 
-CFLAGS	=	-Werror -I ../include 
+CFLAGS	=	-I ../include 
 LDFLAGS	=	
 
 # Headers

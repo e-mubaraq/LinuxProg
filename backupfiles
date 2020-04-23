@@ -1,6 +1,18 @@
 #!/bin/bash
 
-source mubarak_funcs
+renameBackup()
+{
+    file=$1
+    fileBak="$file".bak
+    cp -r "$file" "$fileBak"
+    echo "$fileBak"
+}
+
+copyFile()
+{
+    file = $1
+    cp -r "$file" $HOME/Backup
+}
 
 dir_to_backup="$1"
 here=`pwd`
@@ -17,5 +29,5 @@ echo ran command: $command
 
 for file in `$command`
 do
-    renameBackup "$file"
+   copyFile "$file"
 done

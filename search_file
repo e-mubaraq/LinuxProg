@@ -30,5 +30,5 @@ do
 done
 shift "$(($OPTIND -1))"
 echo $1 $2
-file=$1
-string=$2
+file=$2
+string=$1

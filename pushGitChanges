@@ -1,13 +1,14 @@
 #!/bin/bash
 
-#echo `git status`
-git status | grep Untracked
+#git status | grep Untracked
+git status | grep modified
 if [ $? -ne 0 ]
 then
     echo "No files to add."
-    read -p "Please enter filename or . to add all files: " file
-    git add "$file"
+    exit 0
 fi
+read -p "Please enter filename or . to add all files: " file
+git add "$file"
 
 read -p "Please enter your commit message: " message
 
