@@ -1,58 +1,73 @@
-
-#include <cstring>
-#include <string>
+#include    <stdio.h>
+#include    <stdlib.h>
+#include    <string.h>
 #include "../include/perms.h"
 
-using namespace std;
+
 int main()
 {
-    string str;
-    cout << "Enter the file permission: ";
-    cin >> str;
+    char str[15];
 
-    if (str.length() == 9)
-        cout << "This is the permission for chmod: " << permissionString(str);
+    fprintf(stdout, "Enter the file permission: ");
+    fgets(str, 10, stdin);
+    printf("%d\n" , strlen(str));
+    if (strlen(str) == 9)
+        fprintf(stdout, "This is the permission for chmod: %s", permissionString(str));
     else
-        cout << str << " is not a valid permission. Permissions should be 9 characters long.";
+        fprintf(stdout, "%s is not a valid permission. Permissions should be 9 characters long.", str);
 
     return 0;
 }
 
-string permissionString(string perms)
+char* permissionString(char * perms)
 {
-    string permission;
-    string userPerm = perms.substr(0, 3);
-    string groupPerm = perms.substr(3, 3);
-    string otherPerm = perms.substr(6, 3);
+    char* permission;
+    printf("%s\n", perms);
+    char userPerm, groupPerm, otherPerm;
+    char u[3];
+    strncpy(u, perms, 3);
+    printf("%s\n", u);
+    char g[3];
+    strncpy(g, perms+3, 3);
+    printf("%s\n", g);
+    char o[3];
+    strncpy(o, perms+6, 3);
 
-    userPerm = onePermission(userPerm);
-    groupPerm = onePermission(groupPerm);
-    otherPerm = onePermission(otherPerm);
+    printf("%s\n", o);
+    
+    userPerm = onePermission(u);
+    groupPerm = onePermission(g);
+    otherPerm = onePermission(o);
+    printf("%c%c%c\n", userPerm, groupPerm, otherPerm);
 
-    permission = userPerm + groupPerm + otherPerm;
+    permission[0] = userPerm;
+    permission[1] = groupPerm;
+    permission[2] = otherPerm;
+    //permission = userPerm + groupPerm + otherPerm;
+    printf("%s\n", permission);
     return permission;
 }
 
-string onePermission(string perms)
+char onePermission(char perms[])
 {
-    string onePerm;
+    char onePerm;
 
-    if (perms.compare("rwx") == 0)
-        onePerm = "7";
-    else if (perms.compare("rw-") == 0)
-        onePerm = "6";
-    else if (perms.compare("r-x") == 0)
-        onePerm = "5";
-    else if (perms.compare("r--") == 0)
-        onePerm = "4";
-    else if (perms.compare("-wx") == 0)
-        onePerm = "3";
-    else if (perms.compare("-w-") == 0)
-        onePerm = "2";
-    else if (perms.compare("--x") == 0)
-        onePerm = "1";
-    else if (perms.compare("---") == 0)
-        onePerm = "0";
+    if (strcmp(perms , "rwx"))
+        onePerm = '7';
+    else if (strcmp(perms , "rw-"))
+        onePerm = '6';
+    else if (strcmp(perms , "r-x"))
+        onePerm = '5';
+    else if (strcmp(perms , "r--"))
+        onePerm = '4';
+    else if (strcmp(perms , "-wx"))
+        onePerm = '3';
+    else if (strcmp(perms , "-w-"))
+        onePerm = '2';
+    else if (strcmp(perms , "--x"))
+        onePerm = '1';
+    else if (strcmp(perms , "---"))
+        onePerm = '0';
     else
         onePerm = perms;
 

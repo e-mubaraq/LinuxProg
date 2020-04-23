@@ -1,8 +1,2 @@
-#include <iostream>
-#include <string>
-#include <cstring>
-
-using namespace std;
-
-string permissionString(string perms);
-string onePermission(string perms);
+char* permissionString(char *perms);
+char onePermission(char *perms);

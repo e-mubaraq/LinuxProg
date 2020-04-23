@@ -12,17 +12,16 @@ do
     if [ "$option" == "i" ]
     then
         echo $option is an option
-        grep -i "$string" "$file"
+        flag="-i"
     elif [ "$option" == "n" ]
     then
         echo $option is an option
-        grep -n "$string" "$file"
+        flag="-n"
     elif [ "$option" == "p" ]
     then
         echo Got option $option in $OPTARG $OPTIND
         pvalue="$OPTARG"
-        grep -m $pvalue "$string" "$file"
-        echo p-args: $1 $2 $3
+        flag="-m $pvalue"
     else
         showHelp
         exit 1
@@ -32,3 +31,8 @@ shift "$(($OPTIND -1))"
 echo $1 $2
 file=$2
 string=$1
+
+#grep "$flag" "$string" "$file"
+command="grep $flag $string $file"
+echo ran command: $command
+$command

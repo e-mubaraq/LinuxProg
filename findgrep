@@ -1,6 +1,12 @@
 #!/bin/bash
 
-source mubarak_funcs
+showUsage()
+{
+    echo "This script searches for the lines in the file supplied by the user that have the string supplied by the user"
+}
+read -p "Please enter filename you want to search from: " file
+read -p "Please enter string to look for: " string
+
 if [ -n "$1" ]
 then
     while getopts "h" option
@@ -9,5 +15,6 @@ then
     done
 
 else
-    find . -name '*.h' -exec grep -Hn "include" {} \; 2>/dev/null
+    find . -name $file -exec grep -Hn "$string" {} \; #2>/dev/null
+    #find . -name '*.h' -exec grep -Hn "include" {} \; 2>/dev/null
 fi
