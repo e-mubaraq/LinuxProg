@@ -2,7 +2,7 @@
 
 showHelp()
 {
-    echo "scrip usage: search_file [-in] [-pn] file"
+    echo "Script usage: search_file [-in] [-pn] file"
     echo "Use -i to ignore case. The -n to show the line numbers of the matched lines. The -pn flag is used to set the number of lines shown when using more."
 }
 
