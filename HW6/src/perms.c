@@ -9,7 +9,7 @@ int main()
     char str[15];
 
     fprintf(stdout, "Enter the file permission: ");
-    fgets(str, 10, stdin);
+    fgets(str, 13, stdin);
     printf("%d\n" , strlen(str));
     if (strlen(str) == 9)
         fprintf(stdout, "This is the permission for chmod: %s", permissionString(str));
@@ -22,51 +22,50 @@ int main()
 char* permissionString(char * perms)
 {
     char* permission;
-    printf("%s\n", perms);
+    int len = strlen(perms);
     char userPerm, groupPerm, otherPerm;
-    char u[3];
-    strncpy(u, perms, 3);
-    printf("%s\n", u);
-    char g[3];
-    strncpy(g, perms+3, 3);
-    printf("%s\n", g);
-    char o[3];
-    strncpy(o, perms+6, 3);
+    char *u, *g, *o;
 
-    printf("%s\n", o);
+    permission= (char*)malloc(len*sizeof(char));
+    u= (char*)malloc(3*sizeof(char));
+    strncpy(u, perms, 3);
+
+    g= (char*)malloc(3*sizeof(char));
+    strncpy(g, perms+3, 3);
+
+    o= (char*)malloc(3*sizeof(char));
+    strncpy(o, perms+6, 3);
     
     userPerm = onePermission(u);
     groupPerm = onePermission(g);
     otherPerm = onePermission(o);
-    printf("%c%c%c\n", userPerm, groupPerm, otherPerm);
 
     permission[0] = userPerm;
     permission[1] = groupPerm;
     permission[2] = otherPerm;
-    //permission = userPerm + groupPerm + otherPerm;
-    printf("%s\n", permission);
+
     return permission;
 }
 
-char onePermission(char perms[])
+char onePermission(char *perms)
 {
     char onePerm;
 
-    if (strcmp(perms , "rwx"))
+    if (strcmp(perms , "rwx") == 0)
         onePerm = '7';
-    else if (strcmp(perms , "rw-"))
+    else if (strcmp(perms , "rw-") == 0)
         onePerm = '6';
-    else if (strcmp(perms , "r-x"))
+    else if (strcmp(perms , "r-x") == 0)
         onePerm = '5';
-    else if (strcmp(perms , "r--"))
+    else if (strcmp(perms , "r--") == 0)
         onePerm = '4';
-    else if (strcmp(perms , "-wx"))
+    else if (strcmp(perms , "-wx") == 0)
         onePerm = '3';
-    else if (strcmp(perms , "-w-"))
+    else if (strcmp(perms , "-w-") == 0)
         onePerm = '2';
-    else if (strcmp(perms , "--x"))
+    else if (strcmp(perms , "--x") == 0)
         onePerm = '1';
-    else if (strcmp(perms , "---"))
+    else if (strcmp(perms , "---") == 0)
         onePerm = '0';
     else
         onePerm = perms;

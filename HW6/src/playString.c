@@ -16,60 +16,33 @@ int main(int argc, char *argv[])
 {
     char anotherOne[10];
     char string[100];
+    char *res; //[100];
     char *ptr;
 
-     while( strcmp(string , "exit")) 
-     {
+    fprintf(stdout, "Please enter a string: ");
+    fgets(string, 100, stdin);
+    while(strncmp(string, "\n", 1) != 0) 
+    {
+        // reverseString1(string);
+        // fprintf(stdout, "reverseString1 is %s\n", string);
 
-     }
+        // reverseString1_a(string);
+        // fprintf(stdout, "reverseString1_a is %s\n", string);
 
-    strcpy(string, "abcd");
-    fprintf(stdout, "string is  %s\n", string);
-    reverseString1(string);
-    fprintf(stdout, "reverse is %s\n", string);
+        fprintf(stdout, "String is %s\n", string);
+        res = reverse1(string);
+        fprintf(stdout, "reverse1 is %s\n", res);
 
-    strcpy(string, "012345678");
-    fprintf(stdout, "string is %s\n", string);
-    reverseString1(string);
-    fprintf(stdout, "reverse is %s\n", string);
+        fprintf(stdout, "String is %s\n", string);
+        res = reverse2(string);
+        fprintf(stdout, "reverse2 is %s\n", res);
+        fprintf(stdout, "String is %s\n", string);
 
-    fprintf(stdout, "string is %s\n", string);
-    reverseString2(string);
-    fprintf(stdout, "reverse is %s\n", string);
 
-    strcpy(string, "abcd");
-    fprintf(stdout, "string is %s\n", string);
-    reverseString2(string);
-    fprintf(stdout, "reverse is %s\n", string);
+        fprintf(stdout, "Please enter another string: ");
+        fgets(string, 100, stdin);
+    }
 
-    ptr = "This is a test";
-    strcpy(string, ptr);
-
-    fprintf(stdout, "string is %s\n", string);
-    toUpper(string);
-    fprintf(stdout, "string is %s\n", string);
-    toLower(string);
-    fprintf(stdout, "string is %s\n", string);
-
-    // strings are hard! look at using strncpy()
-
-    strcpy(anotherOne, "abcd");
-    fprintf(stdout, "anotherOne is %s\n", anotherOne);
-
-    strcpy(string, "Puff, the magic dragon, lived by the sea, and frolicked in the autumn mist in a land called Honalee!");
-    fprintf(stdout, "len is %ld string is %s\n", strlen(string), string);
-    fprintf(stdout, "sizeof string: %ld anotherOne: %ld\n", sizeof(string), sizeof(anotherOne));
-    //fprintf(stdout, "string: %p anotherOne: %p\n", string, anotherOne);
-    //fprintf(stdout, "string: %s string: %p\n", (string + 98), string + 98);
-    
-    fprintf(stdout, "anotherOne is %s\n", anotherOne);
-    reverseString2(string);
-    fprintf(stdout, "string is %s\n", string);
-
-    //strcpy(anotherOne, "abcd");
-    //fprintf(stdout, "string is %s\n", string);
-
-    //strcpy(ptr, "abcd");
     return(0);
 }
 
@@ -95,6 +68,43 @@ void reverseString1(char *str)
     }
 }
 
+char *reverse1(char *str)
+{
+    char *result;
+    int i,j;
+    int len;
+    char c;
+
+    len = strlen(str);
+    result = (char*)malloc(len*sizeof(char));
+    j = 0;
+    for (i = len-1; i >= 0; i--) 
+    {
+        //str[i] != '\0';
+        result[j] = str[i];
+        printf("str[i%d] %c\n", i, str[i]);
+        printf("result %c\n", result[j]);
+        j++;
+    }
+
+    return result;
+}
+
+void reverseString1_a(char *str)
+{
+    int i,j;
+    int len;
+    char c;
+
+    len = strlen(str);
+    for (i = 0; i < len/2; i++)
+    {
+        j = len - i - 1;
+        swapChar(&str[i], &str[j]);
+    }
+}
+
+
 // reverse string using pointers, no copies allowed
 
 void reverseString2(char *str)
@@ -114,6 +124,29 @@ void reverseString2(char *str)
         ptr1++;
         ptr2--;
     }
+}
+
+char* reverse2(char *str)
+{
+    char *result;
+    int len;
+    char *ptr1, *ptr2;
+
+    len = strlen(str);
+    result = (char*)malloc(len*sizeof(char));
+
+    ptr1 = str;
+    ptr2 = &(str[len - 1]);
+    
+    while (ptr1 < ptr2)
+    {
+        //fprintf(stdout, "switch %p and %p\n", ptr1, ptr2);
+        swapChar(ptr1, ptr2);
+        ptr1++;
+        ptr2--;
+    }
+
+    return result;
 }
 
 void swapChar(char *c1, char *c2)
