@@ -3,36 +3,43 @@
 showHelp()
 {
     echo "Script usage: search_file [-in] [-pn] file"
-    echo "Use -i to ignore case. The -n to show the line numbers of the matched lines. The -pn flag is used to set the number of lines shown when using more."
+    echo "Use -i to ignore case. The -n to show the line numbers of the matched lines.\
+     The -pn flag is used to set the number of lines shown when using more."
 }
 
-echo $1 $2
+flag="-"
+
 while getopts "inp:" option
 do
     if [ "$option" == "i" ]
     then
         echo $option is an option
-        flag="-i"
+        flag=$flag"i"
     elif [ "$option" == "n" ]
     then
         echo $option is an option
-        flag="-n"
+        flag=$flag"n"
     elif [ "$option" == "p" ]
     then
         echo Got option $option in $OPTARG $OPTIND
         pvalue="$OPTARG"
-        flag="-m $pvalue"
+        #flag="-m$pvalue"
+        moreFlag="| more -$pvalue"
     else
         showHelp
         exit 1
     fi
 done
 shift "$(($OPTIND -1))"
-echo $1 $2
-file=$2
-string=$1
+file=$1
 
+read -p "Please enter string to look for: " string
 #grep "$flag" "$string" "$file"
-command="grep $flag $string $file"
-echo ran command: $command
-$command
+while [ -n "$string" ]
+do
+    command="grep $flag $string $file"
+    #command="grep $flag $string $file $moreFlag"
+    echo ran command: $command
+    $command
+    read -p "Please enter string to look for: " string
+done
