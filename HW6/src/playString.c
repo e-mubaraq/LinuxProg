@@ -14,20 +14,19 @@
 
 int main(int argc, char *argv[])
 {
-    char anotherOne[10];
     char string[100];
-    char *res; //[100];
+    char *res;
     char *ptr;
 
     fprintf(stdout, "Please enter a string: ");
     fgets(string, 100, stdin);
     while(strncmp(string, "\n", 1) != 0) 
     {
-        // reverseString1(string);
-        // fprintf(stdout, "reverseString1 is %s\n", string);
+        reverseString1(string);
+        fprintf(stdout, "reverseString1 is %s\n", string);
 
-        // reverseString1_a(string);
-        // fprintf(stdout, "reverseString1_a is %s\n", string);
+        reverseString1_a(string);
+        fprintf(stdout, "reverseString1_a is %s\n", string);
 
         fprintf(stdout, "String is %s\n", string);
         res = reverse1(string);
@@ -80,10 +79,7 @@ char *reverse1(char *str)
     j = 0;
     for (i = len-1; i >= 0; i--) 
     {
-        //str[i] != '\0';
         result[j] = str[i];
-        printf("str[i%d] %c\n", i, str[i]);
-        printf("result %c\n", result[j]);
         j++;
     }
 
@@ -135,12 +131,12 @@ char* reverse2(char *str)
     len = strlen(str);
     result = (char*)malloc(len*sizeof(char));
 
-    ptr1 = str;
-    ptr2 = &(str[len - 1]);
+    strcpy(result, str);
+    ptr1 = result;
+    ptr2 = &(result[len - 1]);
     
     while (ptr1 < ptr2)
     {
-        //fprintf(stdout, "switch %p and %p\n", ptr1, ptr2);
         swapChar(ptr1, ptr2);
         ptr1++;
         ptr2--;
