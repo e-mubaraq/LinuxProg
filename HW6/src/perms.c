@@ -9,12 +9,12 @@ int main()
     char str[15];
 
     fprintf(stdout, "Enter the file permission: ");
-    fgets(str, 13, stdin);
-    printf("%d\n" , strlen(str));
+    fgets(str, 10, stdin);
+    printf("%ld\n" , strlen(str));
     if (strlen(str) == 9)
-        fprintf(stdout, "This is the permission for chmod: %s", permissionString(str));
+        fprintf(stdout, "This is the permission for chmod: %s\n", permissionString(str));
     else
-        fprintf(stdout, "%s is not a valid permission. Permissions should be 9 characters long.", str);
+        fprintf(stdout, "%s is not a valid permission. Permissions should be 9 characters long.\n", str);
 
     return 0;
 }
@@ -68,7 +68,7 @@ char onePermission(char *perms)
     else if (strcmp(perms , "---") == 0)
         onePerm = '0';
     else
-        onePerm = perms;
+        onePerm = *perms;
 
     return onePerm;
 }
