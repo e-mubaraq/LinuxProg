@@ -3,68 +3,69 @@
 #include    <string.h>
 
 
-#define q1 0x01
-#define q2 0x02
-#define q3 0x04
-#define q4 0x08
+#define FISH 0x01
+#define CHICKEN 0x02
+#define ALUR 0x04
+#define ALUM 0x08
 
 int main(int argc, char *argv[])
 {
-    char ans;
+     char ans = 0;
+     char prompt;
+     char strans[10];
 
     printf("Please answer the following questions with either y or n \n");
 
-    fprintf(stdout, "Do you eat beef: ");
-    // ans = getchar();
-    scanf("%c", &ans);
-    if (ans == 'y') {
-        ans = ans | q1;
-        printf("ans: %c\n", ans);
+    fprintf(stdout, "Do you eat fish: ");
+    fgets(strans, 9, stdin);
+    prompt = strans[0];
+    if (prompt == 'y') {
+        ans = ans | FISH;
     }
-    else if (ans == 'n')
-        ans = ans & ~q1;
-    // printf("\n Entered character is: ");
-    // putchar(ans);
-    // printf("\n");
-    
+    else if (prompt == 'n')
+        ans = ans & ~FISH;    
       
 
     fprintf(stdout, "Do you eat chicken: ");
-    // ans = getchar();
-    scanf("%c", &ans);
-    if (ans == 'y') 
-        ans = ans | q2;
-    else if (ans == 'n')
-        ans = ans & ~q2;
+    fgets(strans, 9, stdin);
+    prompt = strans[0];
+    if (prompt == 'y') 
+        ans = ans | CHICKEN;
+    else if (prompt == 'n')
+        ans = ans & ~CHICKEN;
 
     fprintf(stdout, "Do you study at ALU Rwanda: ");
-    // ans = getchar();
-    scanf("%c", &ans);
-    if (ans == 'y')
-        ans = ans | q3;
-    else if (ans == 'n')
-        ans = ans & ~q3;
+    fgets(strans, 9, stdin);
+    prompt = strans[0];
+    if (prompt == 'y')
+        ans = ans | ALUR;
+    else if (prompt == 'n')
+        ans = ans & ~ALUR;
 
     fprintf(stdout, "Do you study at ALU Mauritus: ");
-    // ans = getchar();
-    scanf("%c", &ans);
-    if (ans == 'y')
-        ans = ans | q4;
-    else if (ans == 'n') {
-        ans = ans & ~q4;
-        printf("ans: %c\n", ans);
+    fgets(strans, 9, stdin);
+    prompt = strans[0];
+    if (prompt == 'y')
+        ans = ans | ALUM;
+    else if (prompt == 'n') {
+        ans = ans & ~ALUM;
     }
 
-
-    if ((ans & (q1 | q2)) == 0)
-        fprintf(stdout, "\nYou are not a vegetarian");
-    else if ((ans & (q1 & q2)) == 1)
-        fprintf(stdout, "\nYou are a vegetarian");
+    fprintf(stdout, "ans: 0x%0x\n", ans);
     
-    if ((ans & (q3 | q4)) == 0)
-        fprintf(stdout, "\nYou are not an ALU student");
-    else if ((ans & (q3 | q4)) == 1)
+    if ((ans & FISH) && (ans & CHICKEN))
+        fprintf(stdout, "\nYou are not a vegetarian");
+
+    if ((ans & FISH) && !(ans & CHICKEN))
+        fprintf(stdout, "\nYou are a pisceparian");
+
+    if (!(ans & FISH) && !(ans & CHICKEN))
+        fprintf(stdout, "\nYou are a vegetarian");
+
+    if ((ans & ALUR) || (ans & ALUM))
         fprintf(stdout, "\nYou are an ALU student");
+    else 
+        fprintf(stdout, "\nYou are not  an ALU student");
 
 
 }
