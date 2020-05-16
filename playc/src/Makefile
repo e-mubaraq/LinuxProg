@@ -4,18 +4,12 @@
 
 MAKE 	=	make
 
-MAKEFLAGS = -f
-
-FILES = programs.mak arrays.mak random.mak
 # Specify the source with main and the executable file name
 
-#all: ${FILES}
-all: programs.mak arrays.mak random.mak
-
-# ${FILES}:
-# 	 ${MAKE} ${MAKEFLAGS} $@
-programs.mak:
-	 ${MAKE} -f $@
+all: 
+	 ${MAKE} -f programs.mak
+	 ${MAKE} -f arrays.mak; \
+	 ${MAKE} -f random.mak
 
 clean:
  

@@ -37,9 +37,14 @@ read -p "Please enter string to look for: " string
 #grep "$flag" "$string" "$file"
 while [ -n "$string" ]
 do
-    command="grep $flag $string $file"
-    #command="grep $flag $string $file $moreFlag"
-    echo ran command: $command
-    $command
+    #command="grep $flag $string $file"
+    if [ -z "$pvalue" ]
+    then
+        grep $flag $string $file 
+    else
+        grep $flag $string $file | more -$pvalue
+    fi
+    #echo ran command: $command
+   # $command
     read -p "Please enter string to look for: " string
 done

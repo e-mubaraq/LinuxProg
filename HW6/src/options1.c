@@ -2,34 +2,69 @@
 #include    <stdlib.h>
 #include    <string.h>
 
-#define y 01
-#define n 02
 
+#define q1 0x01
+#define q2 0x02
+#define q3 0x04
+#define q4 0x08
 
 int main(int argc, char *argv[])
 {
-
-    char r1[5], r2[5], r3[5], r4[5];
+    char ans;
 
     printf("Please answer the following questions with either y or n \n");
+
     fprintf(stdout, "Do you eat beef: ");
-    fgets(r1, 2, stdin);
-    if (strlen(r1) != 1) {
-        fprintf(stdout, "You didn't enter y or n");
-        exit (0);
-    }   
+    // ans = getchar();
+    scanf("%c", &ans);
+    if (ans == 'y') {
+        ans = ans | q1;
+        printf("ans: %c\n", ans);
+    }
+    else if (ans == 'n')
+        ans = ans & ~q1;
+    // printf("\n Entered character is: ");
+    // putchar(ans);
+    // printf("\n");
+    
+      
 
     fprintf(stdout, "Do you eat chicken: ");
-    fgets(r2, 2, stdin);
+    // ans = getchar();
+    scanf("%c", &ans);
+    if (ans == 'y') 
+        ans = ans | q2;
+    else if (ans == 'n')
+        ans = ans & ~q2;
 
     fprintf(stdout, "Do you study at ALU Rwanda: ");
-    fgets(r3, 2, stdin);
+    // ans = getchar();
+    scanf("%c", &ans);
+    if (ans == 'y')
+        ans = ans | q3;
+    else if (ans == 'n')
+        ans = ans & ~q3;
 
     fprintf(stdout, "Do you study at ALU Mauritus: ");
-    fgets(r4, 2, stdin);
+    // ans = getchar();
+    scanf("%c", &ans);
+    if (ans == 'y')
+        ans = ans | q4;
+    else if (ans == 'n') {
+        ans = ans & ~q4;
+        printf("ans: %c\n", ans);
+    }
 
 
-    printf("%s\n" , r4);
+    if ((ans & (q1 | q2)) == 0)
+        fprintf(stdout, "\nYou are not a vegetarian");
+    else if ((ans & (q1 & q2)) == 1)
+        fprintf(stdout, "\nYou are a vegetarian");
+    
+    if ((ans & (q3 | q4)) == 0)
+        fprintf(stdout, "\nYou are not an ALU student");
+    else if ((ans & (q3 | q4)) == 1)
+        fprintf(stdout, "\nYou are an ALU student");
 
 
 }
