@@ -1,25 +1,25 @@
 #!/bin/bash
 
-copyFile()
-{
-    file = $1
-    cp -r "$file" $HOME/Backup
-}
-
 dir_to_backup="$1"
-here=`pwd`
+backup_folder="$2"
 
-if [ -n "$dir_to_backup" ]
+if [ -z "$dir_to_backup" ]
 then
-    findflag="-newer $dir_to_backup"
-else
-    findflag="-newer ."
+    echo "Please supply folder to be backed up"
+    exit 0
 fi
-command="find . $findflag"
-#$command
-echo ran command: $command
 
-for file in `$command`
-do
-   copyFile "$file"
-done
+if [ ! -d "$dir_to_backup" ]
+then
+    echo "Folder $dir_to_backup doesn't exit, Please supply an existing folder to be backed up"
+    exit 0
+fi
+
+if [ -z "$backup_folder" ] || [ ! -d "$backup_folder" ]
+then
+    mkdir $HOME/Backup
+    backup_folder=$HOME/Backup
+    echo "This is $backup_folder folder"
+fi
+
+rsync -avz $dir_to_backup $backup_folderls
