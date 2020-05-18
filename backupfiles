@@ -19,7 +19,7 @@ if [ -z "$backup_folder" ] || [ ! -d "$backup_folder" ]
 then
     mkdir $HOME/Backup
     backup_folder=$HOME/Backup
-    echo "This is $backup_folder folder"
 fi
 
-rsync -avz $dir_to_backup $backup_folderls
+rsync -avz $dir_to_backup $backup_folder
+echo "$dir_to_backup has been backup to $backup_folder"
