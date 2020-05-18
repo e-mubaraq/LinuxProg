@@ -8,56 +8,61 @@ echo USER: $user
 if [ "$st" != "start" ] && [ "$st" != "stop" ] && [ "$st" != "summary" ]
 then
     echo "Please enter start, stop or summary"
-else
-    #echo "Please create a summary.txt file in the current directory before running a summary"
-    if [ "$st" = "start" ]
-    then
-        echo "Start tracking time for $task"
-        tmpFile=`mktemp /tmp/$task.XXXX`
+    exit 1
+fi
 
-        startTime=`date +%s`
-        echo `date -u` >> $tmpFile
-        echo $startTime >> $tmpFile
-    elif [ "$st" = "stop" ]
-    then
-        echo "Stop tracking time"
-        stopTime=`date +%s`
-        tmpFile=`ls -rt /tmp/$task* | tail -1`
-        echo $stopTime >> $tmpFile
+if [ "$st" = "start" ]
+then
+    echo "Start tracking time for $task"
+    tmpFile=`mktemp /tmp/$task.XXXX`
 
-        count=1
-        while read LINE; do
-            if [ $count -eq 2 ]
-            then
-                startTime=$LINE
-            elif [ $count -eq 3 ]
-            then
-                stopTime=$LINE
-            fi
-            ((count=count+1))
-        done < $tmpFile
+    startTime=`date +%s`
+    echo `date` >> $tmpFile
+    echo $startTime >> $tmpFile
+fi
 
-        timeSpent=$(( $stopTime - $startTime ))
-        ((hours=timeSpent/3600))
-        ((minutes=(timeSpent%3600)/60))
-        ((secs=(timeSpent%3600)%60))
-        #ls | grep summary.txt
-        find . -name summary.txt
-        if [ $? -ne 0 ]
+if [ "$st" = "stop" ]
+then
+    echo "Stop tracking time"
+    stopTime=`date +%s`
+    tmpFile=`ls -rt /tmp/$task* | tail -1`
+
+    echo $stopTime >> $tmpFile
+
+    count=1
+    while read LINE; do
+        if [ $count -eq 2 ]
         then
-            touch summary.txt
-        fi
-
-        echo "Total time spent on $task as of `date -u` is $hours hours $minutes minutes $secs seconds" >> summary.txt
-
-        rm $tmpFile
-    else
-        if [ -z "$task" ]
+            startTime=$LINE
+        elif [ $count -eq 3 ]
         then
-            cat summary.txt
-            exit 0
+            stopTime=$LINE
         fi
+        ((count=count+1))
+    done < $tmpFile
 
-        grep $task summary.txt
+    timeSpent=$(( $stopTime - $startTime ))
+    ((hours=timeSpent/3600))
+    ((minutes=(timeSpent%3600)/60))
+    ((secs=(timeSpent%3600)%60))
+    #ls | grep summary.txt
+    find . -name summary.txt
+    if [ $? -ne 0 ]
+    then
+        touch summary.txt
     fi
+
+    echo "Total time spent on $task as of `date` is $hours hours $minutes minutes $secs seconds" >> summary.txt
+
+    rm $tmpFile
+fi
+
+if [ "$st" = "summary" ]
+then
+    if [ -z "$task" ]
+    then
+        cat summary.txt
+        exit 0
+    fi
+    grep $task summary.txt
 fi
