@@ -1,0 +1,3 @@
+Total time spent on DSA as of Mon 18 May 13:20:08 UTC 2020 is 0 hours 5 minutes 37 seconds
+Total time spent on InfoSec as of Mon 18 May 13:20:15 UTC 2020 is 0 hours 5 minutes 44 seconds
+Total time spent on DIAML as of Mon 18 May 13:20:27 UTC 2020 is 0 hours 5 minutes 0 seconds

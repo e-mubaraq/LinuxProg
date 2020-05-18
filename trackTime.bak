@@ -1,29 +1,57 @@
 #!/bin/bash
 
 st=$1
+task=$2
 user=`logname`
 echo USER: $user
 
-if [ "$st" != "start" ] && [ "$st" != "stop" ]
+if [ "$st" != "start" ] && [ "$st" != "stop" ] && [ "$st" != "summary" ]
 then
-    echo "Please enter start or stop"
-
+    echo "Please enter start, stop or summary"
 else
+    echo "Please create a summary.txt file in the current directory before running a summary"
     if [ "$st" = "start" ]
     then
-        echo "Start tracking time"
-        export startTime=`date +%s`
-    else
+        echo "Start tracking time for $task"
+        tmpFile=`mktemp /tmp/$task.XXXX`
+
+        startTime=`date +%s`
+        echo `date -u` >> $tmpFile
+        echo $startTime >> $tmpFile
+    elif [ "$st" = "stop" ]
+    then
         echo "Stop tracking time"
         stopTime=`date +%s`
-        if [ $startTime != 0 ]
+        tmpFile=`ls -rt /tmp/$task* | tail -1`
+        echo $stopTime >> $tmpFile
+
+    else
+        if [ -z "$task" ]
         then
-            timeSpent=$(( $stopTime - $startTime ))
-            echo $timeSpent
-            startTime=0
-        else
-            echo "There is no task to stop"       
+            cat summary.txt
+            exit 0
         fi
+
+        tmpFile=`ls -rt /tmp/$task* | tail -1`
+        count=1
+        while read LINE; do
+            if [ $count -eq 2 ]
+            then
+                startTime=$LINE
+            elif [ $count -eq 3 ]
+            then
+                stopTime=$LINE
+            fi
+            ((count=count+1))
+        done < $tmpFile
+
+        timeSpent=$(( $stopTime - $startTime ))
+        ((hours=timeSpent/3600))
+        ((minutes=(timeSpent%3600)/60))
+        ((secs=(timeSpent%3600)%60))
+        echo "Total time spent on $task as of `date -u` is $hours hours $minutes minutes $secs seconds" >> summary.txt
+        #cat summary.txt
+        grep $task
+        rm $tmpFile
     fi
 fi
-

@@ -1,13 +1,5 @@
 #!/bin/bash
 
-renameBackup()
-{
-    file=$1
-    fileBak="$file".bak
-    cp -r "$file" "$fileBak"
-    echo "$fileBak"
-}
-
 copyFile()
 {
     file = $1
